@@ -1,16 +1,19 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 
-var VideoPlayer = (props) => (
-  <div className="video-player">
-    <div className="embed-responsive embed-responsive-16by9">
-      <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + exampleVideoData[0].id.videoId + "?autoplay=1"} allowFullScreen></iframe>
+var VideoPlayer = (props) => {
+  // debugger;
+  return (
+    <div className="video-player">
+      <div className="embed-responsive embed-responsive-16by9">
+        <iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + props.video[0].id.videoId} allowFullScreen></iframe>
+      </div>
+      <div className="video-player-details">
+        <h3>{props.video[0].snippet.title}</h3>
+        <div>{props.video[0].snippet.description}</div>
+      </div>
     </div>
-    <div className="video-player-details">
-      <h3>{exampleVideoData[0].snippet.title}</h3>
-      <div>{exampleVideoData[0].snippet.description}</div>
-    </div>
-  </div>
-);
+  );
+};
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
