@@ -1,40 +1,22 @@
-var searchYouTube = (options, callback) => {
-  debugger;
-  $.ajax({
-    maxResults: options.max,
-    key: options.key,
-    q: options.query,
-    type: 'GET',
-  });
-  callback();
+var searchYouTube = ({ key, query, max = 5 }, callback) => {
+  // debugger;
+  $.get('https://www.googleapis.com/youtube/v3/search', {
+    part: 'snippet',
+    key: key,
+    q: query,
+    maxResults: max,
+    type: 'video',
+    videoEmbeddable: 'true'
+  })
+    .done(({ items }) => {
+      if (callback) {
+        callback(items);
+      }
+    })
+    .fail(({ responseJSON }) => {
+      responseJSON.error.errors.forEach((err) => console.error(err));
+    });
 };
 
-
-// readAll: function(successCB, errorCB = null) {
-//   $.ajax({
-//     url: Parse.server,
-//     type: 'GET',
-//     data: { order: '-createdAt' },
-//     contentType: 'application/json',
-//     success: successCB,
-//     error: errorCB || function(error) {
-//       console.error('chatterbox: Failed to fetch messages', error);
-//     }
-//   });
-// }
-
-// create: function(message, successCB, errorCB = null) {
-//   // todo: save a message to the server
-//   $.ajax({
-//     url: Parse.server,
-//     type: 'POST',
-//     data: JSON.stringify(message),
-//     contentType: 'application/json',
-//     success: successCB,
-//     error: errorCB || function(error) {
-//       console.error('chatterbox: Failed to post message', error);
-//     }
-//   });
-// },
-
+window.searchYouTube = searchYouTube;
 export default searchYouTube;
